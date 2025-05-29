@@ -1,0 +1,267 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Maintenance Request Form</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+      <style>
+        /* Custom styles to ensure a consistent look with your original index.html aesthetic */
+        body {
+          font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+          background: linear-gradient(135deg, #667eea, #764ba2); /* Background gradient from index.html */
+          color: #fff; /* White text for the body background */
+          min-height: 100vh; /* Ensure body takes full viewport height */
+          display: flex;
+          justify-content: center; /* Center content horizontally */
+          align-items: center; /* Center content vertically */
+          padding: 20px; /* Add padding around the form */
+          box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        .form-container {
+          background-color: #fff; /* White background for the form container */
+          padding: 32px; /* Inner padding for the form */
+          border-radius: 12px; /* Rounded corners for the form container */
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+          width: 100%; /* Full width on smaller screens */
+          max-width: 500px; /* Maximum width for the form */
+          color: #333; /* Darker text for readability on the white background */
+        }
+        .form-title {
+          font-size: 2.2rem; /* Large font size for the title */
+          font-weight: 600; /* Semi-bold font weight */
+          color: #5a67d8; /* Color matching the hover state from your index.html links */
+          margin-bottom: 24px; /* Space below the title */
+          text-align: center; /* Center align the title */
+        }
+        .form-group {
+          margin-bottom: 20px; /* Space between form groups */
+        }
+        .form-group label {
+          display: block; /* Make labels block-level elements */
+          font-weight: 600; /* Semi-bold font weight for labels */
+          margin-bottom: 8px; /* Space below labels */
+          color: #4a5568; /* Slightly darker grey for labels */
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea {
+          width: 100%; /* Full width for input fields */
+          padding: 12px 16px; /* Padding inside input fields */
+          border: 1px solid #cbd5e0; /* Light grey border */
+          border-radius: 8px; /* Rounded corners for input fields */
+          font-size: 1rem; /* Standard font size */
+          color: #2d3748; /* Dark text for input values */
+          background-color: #f7fafc; /* Light background for input fields */
+          transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus states */
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group textarea:focus {
+          outline: none; /* Remove default outline */
+          border-color: #667eea; /* Blue border on focus */
+          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3); /* Blue glow on focus */
+        }
+        .form-group textarea {
+          min-height: 120px; /* Minimum height for textarea */
+          resize: vertical; /* Allow only vertical resizing */
+        }
+        .file-upload-button {
+          background-color: #f6ad55; /* Orange color for the file upload button (from image reference) */
+          color: #fff; /* White text for the button */
+          padding: 12px 24px; /* Padding for the button */
+          border-radius: 8px; /* Rounded corners */
+          font-weight: 600; /* Semi-bold font */
+          cursor: pointer; /* Pointer cursor on hover */
+          display: inline-block; /* Make it an inline block to allow text next to it */
+          transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+        }
+        .file-upload-button:hover {
+          background-color: #ed8936; /* Darker orange on hover */
+          box-shadow: 0 4px 10px rgba(246, 173, 85, 0.4); /* Shadow on hover */
+        }
+        .file-input {
+          display: none; /* Hide the default file input element */
+        }
+        .submit-button {
+          background: linear-gradient(90deg, #667eea, #764ba2); /* Gradient background for submit button */
+          color: #fff; /* White text */
+          padding: 14px 28px; /* Padding for the button */
+          border-radius: 30px; /* Highly rounded corners, similar to your links */
+          font-weight: 600; /* Semi-bold font */
+          font-size: 1.1rem; /* Slightly larger font size */
+          border: none; /* No border */
+          cursor: pointer; /* Pointer cursor on hover */
+          width: 100%; /* Full width */
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+          transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth hover effects */
+        }
+        .submit-button:hover {
+          transform: translateY(-2px); /* Slight lift effect on hover */
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+        }
+        .message-box {
+          background-color: #48bb78; /* Green background for success messages */
+          color: #fff; /* White text */
+          padding: 16px; /* Padding inside the message box */
+          border-radius: 8px; /* Rounded corners */
+          margin-top: 20px; /* Space above the message box */
+          text-align: center; /* Center align text */
+          display: none; /* Hidden by default */
+        }
+        .error-message {
+          background-color: #f56565; /* Red background for error messages */
+        }
+      </style>
+    </head>
+    <body>
+      <div class="form-container">
+        <h2 class="form-title">MAINTENANCE REQUEST</h2>
+
+        <form id="maintenanceRequestForm">
+          <div class="form-group">
+            <label for="firstName">Full Name <span class="text-red-500">*</span></label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input type="text" id="firstName" name="firstName" placeholder="First Name" required class="w-full">
+              <input type="text" id="lastName" name="lastName" placeholder="Last Name" required class="w-full">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="department">Department <span class="text-red-500">*</span></label>
+            <input type="text" id="department" name="department" placeholder="Enter your department..." required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-mail <span class="text-red-500">*</span></label>
+            <input type="email" id="email" name="email" placeholder="ex: myname@email.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number <span class="text-red-500">*</span></label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="e.g., 0123456789" pattern="[0-9]{7,15}" title="Please enter a valid phone number (7-15 digits)" required>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Please enter details of requested work and/or description of problem <span class="text-red-500">*</span></label>
+            <textarea id="description" name="description" placeholder="Please enter details of requested work and/or description of problem..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="picture">Picture (if any)</label>
+            <input type="file" id="picture" name="picture" accept="image/*" class="file-input">
+            <label for="picture" class="file-upload-button">Upload a File</label>
+            <span id="fileName" class="ml-3 text-gray-600 text-sm">No file chosen</span>
+          </div>
+
+          <button type="submit" class="submit-button">Submit Request</button>
+        </form>
+
+        <div id="messageBox" class="message-box">
+          </div>
+      </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const form = document.getElementById('maintenanceRequestForm');
+          const messageBox = document.getElementById('messageBox');
+          const pictureInput = document.getElementById('picture');
+          const fileNameSpan = document.getElementById('fileName');
+
+          // Event listener to update the displayed file name when a file is chosen
+          pictureInput.addEventListener('change', () => {
+            if (pictureInput.files.length > 0) {
+              fileNameSpan.textContent = pictureInput.files[0].name; // Show the name of the selected file
+            } else {
+              fileNameSpan.textContent = 'No file chosen'; // Reset if no file is selected
+            }
+          });
+
+          // Event listener for form submission
+          form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission behavior (page reload)
+
+            // Clear any previous messages and reset message box styling
+            messageBox.style.display = 'none';
+            messageBox.classList.remove('error-message');
+            messageBox.style.backgroundColor = '#48bb78'; // Default to success color
+
+            // Basic validation: Check if all required fields are filled
+            const requiredFields = ['firstName', 'lastName', 'department', 'email', 'phoneNumber', 'description'];
+            let allFieldsFilled = true;
+            for (const fieldId of requiredFields) {
+              const field = document.getElementById(fieldId);
+              if (!field.value.trim()) { // Check if the field is empty or just whitespace
+                allFieldsFilled = false;
+                field.style.borderColor = '#f56565'; // Highlight empty required fields with red border
+                field.style.boxShadow = '0 0 0 3px rgba(245, 101, 101, 0.3)'; // Add a red glow
+              } else {
+                field.style.borderColor = '#cbd5e0'; // Reset border to default
+                field.style.boxShadow = 'none'; // Remove glow
+              }
+            }
+
+            if (!allFieldsFilled) {
+              messageBox.textContent = 'Please fill in all required fields.';
+              messageBox.classList.add('error-message'); // Apply error styling
+              messageBox.style.display = 'block'; // Show the error message
+              return; // Stop the submission process
+            }
+
+            // Simulate form submission process
+            messageBox.textContent = 'Submitting request...';
+            messageBox.style.display = 'block'; // Show a "submitting" message
+
+            // In a real application, you would typically send the form data to a server here.
+            // For example, using the Fetch API:
+            // const formData = new FormData(form);
+            // try {
+            //   const response = await fetch('/api/maintenance-request', {
+            //     method: 'POST',
+            //     body: formData
+            //   });
+            //   const data = await response.json();
+            //   if (response.ok) {
+            //     messageBox.textContent = 'Maintenance request submitted successfully!';
+            //     messageBox.classList.remove('error-message');
+            //     messageBox.style.backgroundColor = '#48bb78'; // Green for success
+            //     form.reset(); // Clear the form
+            //     fileNameSpan.textContent = 'No file chosen'; // Reset file name display
+            //   } else {
+            //     messageBox.textContent = data.message || 'Failed to submit request. Please try again.';
+            //     messageBox.classList.add('error-message');
+            //     messageBox.style.backgroundColor = '#f56565'; // Red for error
+            //   }
+            // } catch (error) {
+            //   console.error('Error submitting form:', error);
+            //   messageBox.textContent = 'An error occurred. Please try again later.';
+            //   messageBox.classList.add('error-message');
+            //   messageBox.style.backgroundColor = '#f56565'; // Red for error
+            // }
+
+
+            // For this example, we'll just simulate a network delay
+            await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds
+
+            messageBox.textContent = 'Maintenance request submitted successfully!';
+            messageBox.classList.remove('error-message'); // Ensure no error styling
+            messageBox.style.backgroundColor = '#48bb78'; // Set to success green
+            messageBox.style.display = 'block'; // Show success message
+
+            form.reset(); // Clear all form fields after successful submission
+            fileNameSpan.textContent = 'No file chosen'; // Reset the file name display
+            // Reset border and shadow for all fields to their default state
+            requiredFields.forEach(fieldId => {
+              const field = document.getElementById(fieldId);
+              field.style.borderColor = '#cbd5e0';
+              field.style.boxShadow = 'none';
+            });
+          });
+        });
+      </script>
+    </body>
+    </html>
+    
