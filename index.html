@@ -171,13 +171,32 @@
       </div>
   </div>
 
-  <script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"; // Updated to version 10.12.2
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"; // Updated to version 10.12.2
+
+    // Your web app's Firebase configuration (provided by you)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhwmvqiU-x982dMi9irHjNrJXZKuQQDM4",
+      authDomain: "maintenancerequestapp-2b17e.firebaseapp.com",
+      projectId: "maintenancerequestapp-2b17e",
+      storageBucket: "maintenancerequestapp-2b17e.firebasestorage.app",
+      messagingSenderId: "512742468837",
+      appId: "1:512742468837:web:937def94545b017e34780c"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // --- Your existing JavaScript code starts here ---
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('maintenanceRequestForm');
       const messageBox = document.getElementById('messageBox');
       const pictureInput = document.getElementById('picture');
       const fileNameSpan = document.getElementById('fileName');
-      const dateSubmittedInput = document.getElementById('dateSubmitted'); // Get the new date input field
+      const dateSubmittedInput = document.getElementById('dateSubmitted');
 
       // Function to format date as YYYY-MM-DD
       const formatDate = (date) => {
@@ -193,95 +212,85 @@
       // Event listener to update the displayed file name when a file is chosen
       pictureInput.addEventListener('change', () => {
         if (pictureInput.files.length > 0) {
-          fileNameSpan.textContent = pictureInput.files[0].name; // Show the name of the selected file
+          fileNameSpan.textContent = pictureInput.files[0].name;
         } else {
-          fileNameSpan.textContent = 'No file chosen'; // Reset if no file is selected
+          fileNameSpan.textContent = 'No file chosen';
         }
       });
 
       // Event listener for form submission
       form.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior (page reload)
+        event.preventDefault();
 
-        // Clear any previous messages and reset message box styling
         messageBox.style.display = 'none';
         messageBox.classList.remove('error-message');
-        messageBox.style.backgroundColor = '#48bb78'; // Default to success color
+        messageBox.style.backgroundColor = '#48bb78';
 
-        // Basic validation: Check if all required fields are filled
         const requiredFields = ['firstName', 'lastName', 'department', 'email', 'phoneNumber', 'description'];
         let allFieldsFilled = true;
         for (const fieldId of requiredFields) {
           const field = document.getElementById(fieldId);
-          if (!field.value.trim()) { // Check if the field is empty or just whitespace
+          if (!field.value.trim()) {
             allFieldsFilled = false;
-            field.style.borderColor = '#f56565'; // Highlight empty required fields with red border
-            field.style.box-shadow = '0 0 0 3px rgba(245, 101, 101, 0.3)'; // Add a red glow
+            field.style.borderColor = '#f56565';
+            field.style.boxShadow = '0 0 0 3px rgba(245, 101, 101, 0.3)';
           } else {
-            field.style.borderColor = '#cbd5e0'; // Reset border to default
-            field.style.boxShadow = 'none'; // Remove glow
+            field.style.borderColor = '#cbd5e0';
+            field.style.boxShadow = 'none';
           }
         }
 
         if (!allFieldsFilled) {
           messageBox.textContent = 'Please fill in all required fields.';
-          messageBox.classList.add('error-message'); // Apply error styling
-          messageBox.style.display = 'block'; // Show the error message
-          return; // Stop the submission process
+          messageBox.classList.add('error-message');
+          messageBox.style.display = 'block';
+          return;
         }
 
-        // Simulate form submission process
         messageBox.textContent = 'Submitting request...';
-        messageBox.style.display = 'block'; // Show a "submitting" message
+        messageBox.style.display = 'block';
 
-        // In a real application, you would typically send the form data to a server here.
-        // For example, using the Fetch API:
-        // const formData = new FormData(form);
-        // try {
-        //   const response = await fetch('/api/maintenance-request', {
-        //     method: 'POST',
-        //     body: formData
-        //   });
-        //   const data = await response.json();
-        //   if (response.ok) {
-        //     messageBox.textContent = 'Maintenance request submitted successfully!';
-        //     messageBox.classList.remove('error-message');
-        //     messageBox.style.backgroundColor = '#48bb78'; // Green for success
-        //     form.reset(); // Clear the form
-        //     fileNameSpan.textContent = 'No file chosen'; // Reset file name display
-        //   } else {
-        //     messageBox.textContent = data.message || 'Failed to submit request. Please try again.';
-        //     messageBox.classList.add('error-message');
-        //     messageBox.style.backgroundColor = '#f56565'; // Red for error
-        //   }
-        // } catch (error) {
-        //   console.error('Error submitting form:', error);
-        //   messageBox.textContent = 'An error occurred. Please try again later.';
-        //   messageBox.classList.add('error-message');
-        //   messageBox.style.backgroundColor = '#f56565'; // Red for error
-        // }
+        try {
+          // Get form data
+          const formData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            department: document.getElementById('department').value,
+            email: document.getElementById('email').value,
+            phoneNumber: document.getElementById('phoneNumber').value,
+            dateSubmitted: document.getElementById('dateSubmitted').value, // Include the auto-generated date
+            description: document.getElementById('description').value,
+            // Note: Handling file uploads directly to Firestore is more complex.
+            // For images, you would typically upload to Firebase Storage first,
+            // then save the download URL to Firestore. This example excludes file upload for simplicity.
+            // If you need file uploads, you'll need to integrate Firebase Storage.
+          };
 
+          // Add a new document with a generated ID to the "maintenanceRequests" collection
+          const docRef = await addDoc(collection(db, "maintenanceRequests"), formData);
+          console.log("Document written with ID: ", docRef.id);
 
-        // For this example, we'll just simulate a network delay
-        await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds
+          messageBox.textContent = 'Maintenance request submitted successfully!';
+          messageBox.classList.remove('error-message');
+          messageBox.style.backgroundColor = '#48bb78';
+          form.reset();
+          fileNameSpan.textContent = 'No file chosen';
+          requiredFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            field.style.borderColor = '#cbd5e0';
+            field.style.boxShadow = 'none';
+          });
+          dateSubmittedInput.value = formatDate(new Date()); // Re-set the date after form reset
 
-        messageBox.textContent = 'Maintenance request submitted successfully!';
-        messageBox.classList.remove('error-message'); // Ensure no error styling
-        messageBox.style.backgroundColor = '#48bb78'; // Set to success green
-        messageBox.style.display = 'block'; // Show success message
-
-        form.reset(); // Clear all form fields after successful submission
-        fileNameSpan.textContent = 'No file chosen'; // Reset the file name display
-        // Reset border and shadow for all fields to their default state
-        requiredFields.forEach(fieldId => {
-          const field = document.getElementById(fieldId);
-          field.style.borderColor = '#cbd5e0';
-          field.style.boxShadow = 'none';
-        });
-        // Re-set the date after form reset
-        dateSubmittedInput.value = formatDate(new Date());
+        } catch (e) {
+          console.error("Error adding document: ", e);
+          messageBox.textContent = 'Error submitting request. Please try again later. Check console for details.';
+          messageBox.classList.add('error-message');
+          messageBox.style.backgroundColor = '#f56565';
+        }
       });
     });
+    // --- Your existing JavaScript code ends here ---
   </script>
 </body>
 </html>
