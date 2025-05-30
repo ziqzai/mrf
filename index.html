@@ -148,13 +148,13 @@
       </div>
 
       <div class="form-group">
-        <label for="description">Please enter details of requested work and/or description of problem <span class="text-red-500">*</span></label>
-        <textarea id="description" name="description" placeholder="Please enter details of requested work and/or description of problem..." required></textarea>
+        <label for="dateSubmitted">Date Submitted</label>
+        <input type="text" id="dateSubmitted" name="dateSubmitted" readonly class="bg-gray-100 cursor-not-allowed">
       </div>
 
       <div class="form-group">
-        <label for="dateSubmitted">Date Submitted</label>
-        <input type="text" id="dateSubmitted" name="dateSubmitted" readonly class="bg-gray-100 cursor-not-allowed">
+        <label for="description">Please enter details of requested work and/or description of problem <span class="text-red-500">*</span></label>
+        <textarea id="description" name="description" placeholder="Please enter details of requested work and/or description of problem..." required></textarea>
       </div>
 
       <div class="form-group">
@@ -216,7 +216,7 @@
           if (!field.value.trim()) { // Check if the field is empty or just whitespace
             allFieldsFilled = false;
             field.style.borderColor = '#f56565'; // Highlight empty required fields with red border
-            field.style.boxShadow = '0 0 0 3px rgba(245, 101, 101, 0.3)'; // Add a red glow
+            field.style.box-shadow = '0 0 0 3px rgba(245, 101, 101, 0.3)'; // Add a red glow
           } else {
             field.style.borderColor = '#cbd5e0'; // Reset border to default
             field.style.boxShadow = 'none'; // Remove glow
