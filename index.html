@@ -8,22 +8,35 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: linear-gradient(to bottom right, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
       color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    main {
+      flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
       padding: 20px;
     }
     .form-container {
-      background-color: #fff;
+      background: #fff;
       color: #333;
       padding: 24px;
       border-radius: 12px;
-      max-width: 500px;
+      max-width: 600px;
       width: 100%;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     }
     .form-title {
       text-align: center;
@@ -72,73 +85,99 @@
       margin-top: 10px;
       display: none;
     }
+    footer {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      color: #f1f1f1;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <h2 class="form-title flex items-center gap-2 justify-center">
-      <img src="data:image/png;base64,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" alt="Logo" class="h-15 w-25">
-      IT Support Request Form
-    </h2>
-    <form id="maintenanceForm">
-      <div>
-        <label>Full Name *</label>
-        <div class="flex gap-2">
-          <input type="text" name="firstName" placeholder="First Name" required class="w-full border p-2 rounded" />
-          <input type="text" name="lastName" placeholder="Last Name" required class="w-full border p-2 rounded" />
+  <header>IT Support Request Portal</header>
+
+  <main>
+    <div class="form-container">
+      <h2 class="form-title flex items-center gap-2 justify-center">
+        <img src="data:image/png;base64,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" alt="Logo" class="h-15 w-25">
+        IT Support Request Form
+      </h2>
+      <!-- FULL FORM CONTENT START -->
+      <form id="maintenanceForm">
+        <!-- Full Name -->
+        <div>
+          <label>Full Name *</label>
+          <div class="flex gap-2">
+            <input type="text" name="firstName" placeholder="First Name" required class="w-full border p-2 rounded" />
+            <input type="text" name="lastName" placeholder="Last Name" required class="w-full border p-2 rounded" />
+          </div>
         </div>
-      </div>
-      <div class="mt-3">
-        <label>Department*</label>
-        <select name="department" required class="w-full border p-2 rounded">
-          <option value="">-- Select a department --</option>
-          <option value="HRA">HRA</option>
-          <option value="Finance">Finance</option>
-          <option value="Procurement">Procurement</option>
-          <option value="Commercial">Commercial</option>
-          <option value="Warehouse">Warehouse</option>
-          <option value="Production">Production</option>
-          <option value="Fems">Fems</option>
-          <option value="Foresight Dialysis">Foresight Dialysis</option>
-          <option value="Product Engineering">Product Engineering</option>
-          <option value="Business Development">Business Development</option>
-          <option value="Regulatory Affairs">Regulatory Affairs</option>
-        </select>
-      </div>
-      <div class="mt-3">
-        <label>Email *</label>
-        <input type="email" name="email" placeholder="example@email.com" required class="w-full border p-2 rounded" />
-      </div>
-      <div class="mt-3">
-        <label>Phone Number *</label>
-        <input type="tel" name="phoneNumber" placeholder="0123456789" required class="w-full border p-2 rounded" />
-      </div>
-      <div class="mt-3">
-        <label>Date Submitted</label>
-        <input type="text" name="dateSubmitted" id="dateSubmitted" readonly class="w-full border p-2 rounded bg-gray-100 cursor-not-allowed" />
-      </div>
-      <div class="mt-3">
-        <label>Problem/ Request Category *</label>
-        <select name="problemCategory" required class="w-full border p-2 rounded">
-          <option value="">-- Select a category --</option>
-          <option value="Computer/ Laptop">Computer/ Laptop</option>
-          <option value="Printer">Printer</option>
-          <option value="Email">Email</option>
-          <option value="Network">Network</option>
-          <option value="Other">SAP</option>
-          <option value="Zoom Link">Zoom Link</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <div class="mt-3">
-        <label>Description *</label>
-        <textarea name="description" placeholder="Describe the issue..." required class="w-full border p-2 rounded"></textarea>
-      </div>
-      <button type="submit" class="submit-button mt-4" id="submitBtn">Submit Request</button>
-      <div class="loading-text" id="loadingText">⏳ Submitting your request, please wait...</div>
-    </form>
-    <div id="messageBox" class="message-box"></div>
-  </div>
+        <!-- Department -->
+        <div class="mt-3">
+          <label>Department*</label>
+          <select name="department" required class="w-full border p-2 rounded">
+            <option value="">-- Select a department --</option>
+            <option value="HRA">HRA</option>
+            <option value="Finance">Finance</option>
+            <option value="Procurement">Procurement</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Warehouse">Warehouse</option>
+            <option value="Production">Production</option>
+            <option value="Fems">Fems</option>
+            <option value="Foresight Dialysis">Foresight Dialysis</option>
+            <option value="Product Engineering">Product Engineering</option>
+            <option value="Business Development">Business Development</option>
+            <option value="Regulatory Affairs">Regulatory Affairs</option>
+          </select>
+        </div>
+        <!-- Email -->
+        <div class="mt-3">
+          <label>Email *</label>
+          <input type="email" name="email" placeholder="example@email.com" required class="w-full border p-2 rounded" />
+        </div>
+        <!-- Phone Number -->
+        <div class="mt-3">
+          <label>Phone Number *</label>
+          <input type="tel" name="phoneNumber" placeholder="0123456789" required class="w-full border p-2 rounded" />
+        </div>
+        <!-- Date Submitted -->
+        <div class="mt-3">
+          <label>Date Submitted</label>
+          <input type="text" name="dateSubmitted" id="dateSubmitted" readonly class="w-full border p-2 rounded bg-gray-100 cursor-not-allowed" />
+        </div>
+        <!-- Problem Category -->
+        <div class="mt-3">
+          <label>Problem/ Request Category *</label>
+          <select name="problemCategory" required class="w-full border p-2 rounded">
+            <option value="">-- Select a category --</option>
+            <option value="Computer/ Laptop">Computer/ Laptop</option>
+            <option value="Printer">Printer</option>
+            <option value="Email">Email</option>
+            <option value="Network">Network</option>
+            <option value="Other">SAP</option>
+            <option value="Zoom Link">Zoom Link</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <!-- Description -->
+        <div class="mt-3">
+          <label>Description *</label>
+          <textarea name="description" placeholder="Describe the issue..." required class="w-full border p-2 rounded"></textarea>
+        </div>
+        <!-- Submit Button -->
+        <button type="submit" class="submit-button mt-4" id="submitBtn">Submit Request</button>
+        <div class="loading-text" id="loadingText">⏳ Submitting your request, please wait...</div>
+      </form>
+      <!-- FULL FORM CONTENT END -->
+      <div id="messageBox" class="message-box"></div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Haziq Imran IT Department FMG
+  </footer>
 
   <script>
     const form = document.getElementById('maintenanceForm');
@@ -147,8 +186,7 @@
     const submitBtn = document.getElementById('submitBtn');
     const loadingText = document.getElementById('loadingText');
 
-    // Set today's date
-    dateSubmitted.value = new Date().toLocaleDateString('en-GB'); 
+    dateSubmitted.value = new Date().toLocaleDateString('en-GB');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -169,7 +207,7 @@
           messageBox.textContent = "✅ Maintenance request submitted successfully!";
           messageBox.className = "message-box success";
           form.reset();
-          dateSubmitted.value = new Date().toLocaleDateString('en-GB'); 
+          dateSubmitted.value = new Date().toLocaleDateString('en-GB');
         } else {
           throw new Error(result);
         }
@@ -185,5 +223,4 @@
     });
   </script>
 </body>
-
 </html>
