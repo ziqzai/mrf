@@ -25,37 +25,22 @@
     main {
       flex: 1;
       padding: 20px;
-      display: flex;
-      justify-content: center;
+      max-width: 900px;
+      margin: auto;
+      color: #fff;
     }
-    .content-container {
-      background: #fff;
-      color: #333;
-      padding: 24px;
+    .guide-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
       border-radius: 12px;
-      max-width: 800px;
-      width: 100%;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      margin-bottom: 20px;
     }
     .guide-title {
-      text-align: center;
-      color: #5a67d8;
+      font-size: 1.5rem;
+      color: #fbbf24;
+      margin-bottom: 10px;
       font-weight: bold;
-      margin-bottom: 20px;
-      font-size: 1.8rem;
-    }
-    .troubleshoot-item {
-      margin-bottom: 20px;
-    }
-    .troubleshoot-item h3 {
-      font-size: 1.2rem;
-      color: #764ba2;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .troubleshoot-item p {
-      margin-left: 1rem;
-      margin-bottom: 4px;
     }
     footer {
       background: rgba(255, 255, 255, 0.05);
@@ -64,50 +49,53 @@
       text-align: center;
       padding: 10px;
       font-size: 14px;
+      margin-top: auto;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="flex justify-center items-center gap-2">
-      <img src="data:image/png;base64,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" alt="Logo" class="h-15 w-25">
-      FMG IT Department
+  <!-- 🟣 Navbar -->
+  <nav class="bg-purple-700 text-white p-4 flex justify-between">
+    <h1 class="text-lg font-bold">FMG IT Department</h1>
+    <div class="flex gap-4">
+      <a href="it-support.html" class="hover:underline">IT Support Form</a>
+      <a href="basic-troubleshoot.html" class="hover:underline font-bold">Basic Troubleshoot</a>
     </div>
-  </header>
+  </nav>
 
   <main>
-    <div class="content-container">
-      <h2 class="guide-title">Basic Troubleshoot Guide</h2>
+    <h2 class="text-3xl font-bold mb-6">Basic Troubleshoot Guide</h2>
 
-    <div class="troubleshoot-item">
-      <h3>💻 PC Tidak Boleh Hidup</h3>
-      <p>1. Pastikan kabel kuasa disambungkan dengan betul.</p>
-      <p>2. Cuba tekan butang kuasa selama 10 saat untuk reset.</p>
-      <p>3. Periksa jika ada bau hangit atau bunyi pelik. Jika ada, hubungi IT support segera.</p>
+    <div class="guide-section">
+      <div class="guide-title">🖥️ PC/Laptop Cannot Power On</div>
+      <p>- Ensure the power cable is plugged in securely.</p>
+      <p>- Check if the power outlet is working.</p>
+      <p>- If using a laptop, make sure the battery is charged.</p>
+      <p>- Try pressing and holding the power button for 10 seconds.</p>
     </div>
 
-    <div class="troubleshoot-item">
-      <h3>🖨️ Printer Tidak Boleh Print</h3>
-      <p>1. Pastikan printer dihidupkan.</p>
-      <p>2. Periksa kabel USB atau sambungan Wi-Fi.</p>
-      <p>3. Restart printer dan cuba print semula.</p>
-      <p>4. Semak jika ada kertas yang tersangkut di dalam printer.</p>
+    <div class="guide-section">
+      <div class="guide-title">🌐 Internet Connection Issues</div>
+      <p>- Check if the network cable is connected properly.</p>
+      <p>- Restart the router or modem.</p>
+      <p>- Ensure Wi-Fi is turned on (for laptops).</p>
+      <p>- Try reconnecting to the network.</p>
     </div>
 
-    <div class="troubleshoot-item">
-      <h3>🌐 Internet Tidak Berfungsi</h3>
-      <p>1. Periksa sambungan Wi-Fi di komputer.</p>
-      <p>2. Restart modem/router.</p>
-      <p>3. Cuba sambungkan ke rangkaian lain untuk pastikan isu pada rangkaian atau peranti.</p>
-      <p>4. Jika masalah berlarutan, hubungi IT support.</p>
+    <div class="guide-section">
+      <div class="guide-title">🖨️ Printer Not Responding</div>
+      <p>- Ensure the printer is powered on.</p>
+      <p>- Check the cable connections between PC and printer.</p>
+      <p>- Verify the printer has paper and ink/toner.</p>
+      <p>- Restart the printer and try printing again.</p>
     </div>
 
-    <div class="troubleshoot-item">
-      <h3>📧 Tidak Boleh Akses Email</h3>
-      <p>1. Semak jika kata laluan yang dimasukkan adalah betul.</p>
-      <p>2. Cuba log masuk menggunakan peranti lain.</p>
-      <p>3. Pastikan sambungan internet stabil.</p>
-      <p>4. Jika akaun terkunci, hubungi IT support untuk reset.</p>
+    <div class="guide-section">
+      <div class="guide-title">📧 Email Issues</div>
+      <p>- Check your internet connection.</p>
+      <p>- Ensure your email credentials are correct.</p>
+      <p>- Try logging in using webmail.</p>
+      <p>- Clear your browser cache if using webmail.</p>
     </div>
   </main>
 
