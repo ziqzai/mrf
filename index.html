@@ -33,7 +33,7 @@
       font-size: 1.8rem;
     }
     .submit-button {
-      background: linear-gradient(90deg, #4f46e5, #6d28d9);
+      background: linear-gradient(90deg, #667eea, #764ba2);
       color: white;
       padding: 12px;
       border: none;
@@ -42,11 +42,13 @@
       cursor: pointer;
       font-size: 16px;
       font-weight: bold;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .submit-button:disabled {
+      background: #a0aec0;
+      cursor: not-allowed;
     }
     .submit-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      opacity: 0.95;
     }
     .message-box {
       display: none;
@@ -62,6 +64,13 @@
     .error {
       background-color: #f56565;
       color: #fff;
+    }
+    .loading-text {
+      text-align: center;
+      color: #4a5568;
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
     }
   </style>
 </head>
@@ -116,7 +125,6 @@
           <option value="Printer">Printer</option>
           <option value="Email">Email</option>
           <option value="Network">Network</option>
-          <option value="SAP">SAP</option>
           <option value="Other">Other</option>
         </select>
       </div>
@@ -124,7 +132,8 @@
         <label>Description *</label>
         <textarea name="description" placeholder="Describe the issue..." required class="w-full border p-2 rounded"></textarea>
       </div>
-      <button type="submit" class="submit-button mt-4">Submit Request</button>
+      <button type="submit" class="submit-button mt-4" id="submitBtn">Submit Request</button>
+      <div class="loading-text" id="loadingText">⏳ Submitting your request, please wait...</div>
     </form>
     <div id="messageBox" class="message-box"></div>
   </div>
@@ -133,12 +142,17 @@
     const form = document.getElementById('maintenanceForm');
     const messageBox = document.getElementById('messageBox');
     const dateSubmitted = document.getElementById('dateSubmitted');
+    const submitBtn = document.getElementById('submitBtn');
+    const loadingText = document.getElementById('loadingText');
 
-    dateSubmitted.value = new Date().toLocaleDateString('en-GB'); // Set today's date
+    // Set today's date
+    dateSubmitted.value = new Date().toLocaleDateString('en-GB'); 
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       messageBox.style.display = 'none';
+      loadingText.style.display = 'block';
+      submitBtn.disabled = true;
 
       const formData = new URLSearchParams(new FormData(form));
 
@@ -153,7 +167,7 @@
           messageBox.textContent = "✅ Maintenance request submitted successfully!";
           messageBox.className = "message-box success";
           form.reset();
-          dateSubmitted.value = new Date().toLocaleDateString('en-GB'); // Reset date
+          dateSubmitted.value = new Date().toLocaleDateString('en-GB'); 
         } else {
           throw new Error(result);
         }
@@ -163,6 +177,8 @@
         messageBox.className = "message-box error";
       }
 
+      loadingText.style.display = 'none';
+      submitBtn.disabled = false;
       messageBox.style.display = 'block';
     });
   </script>
