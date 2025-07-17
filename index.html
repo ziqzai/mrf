@@ -43,8 +43,12 @@
       font-size: 16px;
       font-weight: bold;
     }
+    .submit-button:disabled {
+      background: #a0aec0;
+      cursor: not-allowed;
+    }
     .submit-button:hover {
-      opacity: 0.9;
+      opacity: 0.95;
     }
     .message-box {
       display: none;
@@ -60,6 +64,13 @@
     .error {
       background-color: #f56565;
       color: #fff;
+    }
+    .loading-text {
+      text-align: center;
+      color: #4a5568;
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
     }
   </style>
 </head>
@@ -104,7 +115,8 @@
         <label>Description *</label>
         <textarea name="description" placeholder="Describe the issue..." required class="w-full border p-2 rounded"></textarea>
       </div>
-      <button type="submit" class="submit-button mt-4">Submit Request</button>
+      <button type="submit" class="submit-button mt-4" id="submitBtn">Submit Request</button>
+      <div class="loading-text" id="loadingText">⏳ Submitting your request, please wait...</div>
     </form>
     <div id="messageBox" class="message-box"></div>
   </div>
@@ -113,17 +125,22 @@
     const form = document.getElementById('maintenanceForm');
     const messageBox = document.getElementById('messageBox');
     const dateSubmitted = document.getElementById('dateSubmitted');
-    dateSubmitted.value = new Date().toLocaleDateString('en-GB'); // Set today's date (dd/mm/yyyy)
+    const submitBtn = document.getElementById('submitBtn');
+    const loadingText = document.getElementById('loadingText');
+
+    // Set today's date
+    dateSubmitted.value = new Date().toLocaleDateString('en-GB'); 
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-
-      messageBox.style.display = 'none'; // Hide message box
+      messageBox.style.display = 'none';
+      loadingText.style.display = 'block';
+      submitBtn.disabled = true;
 
       const formData = new URLSearchParams(new FormData(form));
 
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbz5-x_MMj4qwKM-aX6U6BBDePUSF0pTHwcjp-Z8bIcup4FRLQFX4RcQS35SIEXTzjd1aQ/exec", {
+        const response = await fetch("https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec", {
           method: "POST",
           body: formData,
         });
@@ -133,7 +150,7 @@
           messageBox.textContent = "✅ Maintenance request submitted successfully!";
           messageBox.className = "message-box success";
           form.reset();
-          dateSubmitted.value = new Date().toLocaleDateString('en-GB'); // Reset date
+          dateSubmitted.value = new Date().toLocaleDateString('en-GB'); 
         } else {
           throw new Error(result);
         }
@@ -143,6 +160,8 @@
         messageBox.className = "message-box error";
       }
 
+      loadingText.style.display = 'none';
+      submitBtn.disabled = false;
       messageBox.style.display = 'block';
     });
   </script>
