@@ -8,19 +8,31 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #667eea, #764ba2); /* Match logo gradient */
+      background: linear-gradient(to bottom right, #08ac9c, #764ba2); /* Match index gradient */
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
     header {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       color: #fff;
       text-align: center;
       padding: 20px;
       font-size: 1.8rem;
       font-weight: bold;
+    }
+    nav {
+      background: linear-gradient(90deg, #08ac9c, #764ba2); /* Match index navbar */
+      color: white;
+      padding: 15px;
+    }
+    nav a {
+      transition: color 0.3s ease, text-decoration 0.3s ease;
+    }
+    nav a:hover {
+      color: #facc15; /* amber hover effect */
+      text-decoration: underline;
     }
     main {
       flex: 1;
@@ -30,33 +42,23 @@
       color: #fff;
     }
     .guide-section {
-      background: rgba(255, 255, 255, 0.15); /* semi-transparent white */
+      background: rgba(255, 255, 255, 0.15); /* Glass effect */
       backdrop-filter: blur(10px);
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .guide-section:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     }
     .guide-title {
       font-size: 1.5rem;
       color: #facc15; /* amber highlight */
       margin-bottom: 10px;
       font-weight: bold;
-    }
-    nav {
-      background: linear-gradient(90deg, #667eea, #764ba2); /* Match logo gradient */
-    }
-    nav a {
-      transition: color 0.2s ease, text-decoration 0.2s ease;
-    }
-    nav a:hover {
-      text-decoration: underline;
-      color: #facc15; /* amber hover */
     }
     footer {
       background: rgba(255, 255, 255, 0.05);
@@ -65,13 +67,12 @@
       text-align: center;
       padding: 10px;
       font-size: 14px;
-      margin-top: auto;
     }
   </style>
 </head>
 <body>
-  <!-- 🟣 Navbar -->
-  <nav class="text-white p-4 flex justify-between items-center">
+  <!-- 🟢 Navbar -->
+  <nav class="flex justify-between items-center">
     <h1 class="text-lg font-bold">FMG IT Department</h1>
     <div class="flex gap-4">
       <a href="it-support.html" class="hover:text-yellow-300">IT Support Form</a>
