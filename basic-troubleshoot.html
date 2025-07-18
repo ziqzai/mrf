@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #08ac9c, #00a99f);
+      background: linear-gradient(to bottom right, #667eea, #764ba2); /* Match logo gradient */
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -30,17 +30,33 @@
       color: #fff;
     }
     .guide-section {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(5px);
+      background: rgba(255, 255, 255, 0.15); /* semi-transparent white */
+      backdrop-filter: blur(10px);
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .guide-section:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
     }
     .guide-title {
       font-size: 1.5rem;
-      color: #fbbf24;
+      color: #facc15; /* amber highlight */
       margin-bottom: 10px;
       font-weight: bold;
+    }
+    nav {
+      background: linear-gradient(90deg, #667eea, #764ba2); /* Match logo gradient */
+    }
+    nav a {
+      transition: color 0.2s ease, text-decoration 0.2s ease;
+    }
+    nav a:hover {
+      text-decoration: underline;
+      color: #facc15; /* amber hover */
     }
     footer {
       background: rgba(255, 255, 255, 0.05);
@@ -55,16 +71,16 @@
 </head>
 <body>
   <!-- 🟣 Navbar -->
-  <nav class="bg-purple-700 text-white p-4 flex justify-between">
+  <nav class="text-white p-4 flex justify-between items-center">
     <h1 class="text-lg font-bold">FMG IT Department</h1>
     <div class="flex gap-4">
-      <a href="it-support.html" class="hover:underline">IT Support Form</a>
-      <a href="basic-troubleshoot.html" class="hover:underline font-bold">Basic Troubleshoot</a>
+      <a href="it-support.html" class="hover:text-yellow-300">IT Support Form</a>
+      <a href="basic-troubleshoot.html" class="font-bold hover:text-yellow-300">Basic Troubleshoot</a>
     </div>
   </nav>
 
   <main>
-    <h2 class="text-3xl font-bold mb-6">Basic Troubleshoot Guide</h2>
+    <h2 class="text-3xl font-bold mb-6 text-center">🛠️ Basic Troubleshoot Guide</h2>
 
     <div class="guide-section">
       <div class="guide-title">🖥️ PC/Laptop Cannot Power On</div>
