@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #08ac9c, #764ba2); /* Match index gradient */
+      background: linear-gradient(to bottom right, #08ac9c, #764ba2);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -23,15 +23,19 @@
       font-weight: bold;
     }
     nav {
-      background: linear-gradient(90deg, #08ac9c, #764ba2); /* Match index navbar */
+      background: linear-gradient(90deg, #08ac9c, #764ba2);
       color: white;
       padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap; /* 🟢 Make navbar items wrap on small screens */
     }
     nav a {
       transition: color 0.3s ease, text-decoration 0.3s ease;
     }
     nav a:hover {
-      color: #facc15; /* amber hover effect */
+      color: #facc15;
       text-decoration: underline;
     }
     main {
@@ -42,7 +46,7 @@
       color: #fff;
     }
     .guide-section {
-      background: rgba(255, 255, 255, 0.15); /* Glass effect */
+      background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
       border-radius: 12px;
       padding: 20px;
@@ -56,7 +60,7 @@
     }
     .guide-title {
       font-size: 1.5rem;
-      color: #facc15; /* amber highlight */
+      color: #facc15;
       margin-bottom: 10px;
       font-weight: bold;
     }
@@ -67,6 +71,18 @@
       text-align: center;
       padding: 10px;
       font-size: 14px;
+    }
+    /* 📱 Responsive navbar: Stack links on small screens */
+    @media (max-width: 640px) {
+      nav {
+        flex-direction: column;
+        text-align: center;
+      }
+      nav .flex {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
     }
   </style>
 </head>
@@ -112,7 +128,7 @@
       <p>- Go to Control Panel > Devices and Printers, right-click the printer > See what’s printing.</p>
       <p>- Cancel all pending print jobs.</p>
       <p>- Restart the Print Spooler Service:
-                   Open Run (Win + R), type services.msc, find Print Spooler, right-click > Restart.</p>
+        Open Run (Win + R), type <code>services.msc</code>, find Print Spooler, right-click > Restart.</p>
       <p>- Retry printing.</p>
     </div>
 
@@ -125,6 +141,7 @@
     </div>
   </main>
 
+  <!-- 🔵 Footer (Kekal Sama) -->
   <footer>
     © 2025 Haziq Imran IT Department FMG
   </footer>
