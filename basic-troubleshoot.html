@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Basic Troubleshoot Guide</title>
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -13,15 +16,6 @@
       display: flex;
       flex-direction: column;
     }
-    header {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
     nav {
       background: linear-gradient(90deg, #08ac9c, #764ba2);
       color: white;
@@ -29,16 +23,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap; /* 🟢 Make navbar items wrap on small screens */
+      flex-wrap: wrap;
+    }
+    nav a[aria-current="page"], nav a.active {
+      color: #facc15 !important;
+      font-weight: bold;
     }
     nav a {
       transition: color 0.3s ease, text-decoration 0.3s ease;
-    }
-    nav a:hover {
-      color: #facc15;
       text-decoration: none;
     }
-    
+    nav a:hover, nav a:focus {
+      color: #facc15;
+      outline: none;
+    }
     main {
       flex: 1;
       padding: 20px;
@@ -51,19 +49,49 @@
       backdrop-filter: blur(10px);
       border-radius: 12px;
       padding: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
     }
     .guide-section:hover {
       transform: translateY(-5px);
       box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     }
+    .guide-icon {
+      font-size: 2.3rem;
+      background: rgba(250, 204, 21, 0.15);
+      color: #facc15;
+      border-radius: 50%;
+      padding: 15px;
+      margin-right: 5px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
     .guide-title {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       color: #facc15;
       margin-bottom: 10px;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .copy-btn {
+      background: #facc15;
+      color: #a16207;
+      border: none;
+      border-radius: 18px;
+      font-size: 0.9rem;
+      padding: 2px 14px;
+      margin-left: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover {
+      background: #fde047;
     }
     footer {
       background: rgba(255, 255, 255, 0.05);
@@ -73,7 +101,6 @@
       padding: 10px;
       font-size: 14px;
     }
-    /* 📱 Responsive navbar: Stack links on small screens */
     @media (max-width: 640px) {
       nav {
         flex-direction: column;
@@ -84,71 +111,155 @@
         gap: 10px;
         margin-top: 10px;
       }
+      .guide-section {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .guide-title {
+        font-size: 1.1rem;
+      }
+    }
+    /* Print styles */
+    @media print {
+      nav, footer, .copy-btn {
+        display: none !important;
+      }
+      body, main {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .guide-section {
+        background: none !important;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
     }
   </style>
 </head>
 <body>
-   <!-- ✅ Navigation bar -->
-    <nav class="p-4 flex justify-between flex-wrap" style="background: linear-gradient(90deg, #08ac9c, #764ba2); color: white;">
-      <a 
-        href="index.html" 
-        class="text-lg font-bold hover:text-yellow-400 active:text-yellow-500 transition-colors duration-200"
-      >
-        Foresight IT Department
-      </a>
+  <!-- ✅ Navigation bar -->
+  <nav class="p-4 flex justify-between flex-wrap" aria-label="Main Navigation">
+    <a 
+      href="index.html" 
+      class="text-lg font-bold hover:text-yellow-400 transition-colors duration-200"
+      style="text-decoration: none;"
+    >
+      Foresight IT Department
+    </a>
     <div class="flex gap-4 flex-wrap justify-center">
       <a href="it-support.html" class="font-bold no-underline hover:text-yellow-400 transition-colors duration-200">IT Support Form</a>
     </div>
-    </nav>
+  </nav>
 
   <main>
     <h2 class="text-3xl font-bold mb-6 text-center">🛠️ Basic Troubleshoot Guide</h2>
 
     <div class="guide-section">
-      <div class="guide-title">🖥️ PC/Laptop Cannot Power On</div>
-      <p>- Ensure the power cable is plugged in securely.</p>
-      <p>- Check if the power outlet is working.</p>
-      <p>- If using a laptop, make sure the battery is charged.</p>
-      <p>- Try pressing and holding the power button for 10 seconds.</p>
+      <span class="guide-icon">🖥️</span>
+      <div>
+        <div class="guide-title">
+          PC/Laptop Cannot Power On
+          <button class="copy-btn" data-copy="Ensure the power cable is plugged in securely.\nCheck if the power outlet is working.\nIf using a laptop, make sure the battery is charged.\nTry pressing and holding the power button for 10 seconds.">
+            Copy
+          </button>
+        </div>
+        <ul class="list-disc pl-6">
+          <li>Ensure the power cable is plugged in securely.</li>
+          <li>Check if the power outlet is working.</li>
+          <li>If using a laptop, make sure the battery is charged.</li>
+          <li>Try pressing and holding the power button for 10 seconds.</li>
+        </ul>
+      </div>
     </div>
 
     <div class="guide-section">
-      <div class="guide-title">🌐 Internet Connection Issues</div>
-      <p>- Check if the network cable is connected properly.</p>
-      <p>- Restart the router or modem.</p>
-      <p>- Ensure Wi-Fi is turned on (for laptops).</p>
-      <p>- Try reconnecting to the network.</p>
+      <span class="guide-icon" style="color:#06b6d4; background:rgba(6,182,212,0.08)">🌐</span>
+      <div>
+        <div class="guide-title" style="color:#67e8f9">
+          Internet Connection Issues
+          <button class="copy-btn" data-copy="Check if the network cable is connected properly.\nRestart the router or modem.\nEnsure Wi-Fi is turned on (for laptops).\nTry reconnecting to the network.">
+            Copy
+          </button>
+        </div>
+        <ul class="list-disc pl-6">
+          <li>Check if the network cable is connected properly.</li>
+          <li>Restart the router or modem.</li>
+          <li>Ensure Wi-Fi is turned on (for laptops).</li>
+          <li>Try reconnecting to the network.</li>
+        </ul>
+      </div>
     </div>
 
     <div class="guide-section">
-      <div class="guide-title">🖨️ Printer Not Responding</div>
-      <p>- Ensure the printer is powered on.</p>
-      <p>- Check the cable connections between PC and printer.</p>
-      <p>- Verify the printer has paper and ink/toner.</p>
-      <p>- Restart the printer and try printing again.</p>
+      <span class="guide-icon" style="color:#f43f5e; background:rgba(244,63,94,0.08)">🖨️</span>
+      <div>
+        <div class="guide-title" style="color:#fda4af">
+          Printer Not Responding
+          <button class="copy-btn" data-copy="Ensure the printer is powered on.\nCheck the cable connections between PC and printer.\nVerify the printer has paper and ink/toner.\nRestart the printer and try printing again.">
+            Copy
+          </button>
+        </div>
+        <ul class="list-disc pl-6">
+          <li>Ensure the printer is powered on.</li>
+          <li>Check the cable connections between PC and printer.</li>
+          <li>Verify the printer has paper and ink/toner.</li>
+          <li>Restart the printer and try printing again.</li>
+        </ul>
+      </div>
     </div>
 
     <div class="guide-section">
-      <div class="guide-title">🗂 Users Unable to Print</div>
-      <p>- Go to Control Panel > Devices and Printers, right-click the printer > See what’s printing.</p>
-      <p>- Cancel all pending print jobs.</p>
-      <p>- Restart the Print Spooler Service:
-        Open Run (Win + R), type <code>services.msc</code>, find Print Spooler, right-click > Restart.</p>
-      <p>- Retry printing.</p>
+      <span class="guide-icon" style="color:#ca8a04; background:rgba(250,204,21,0.08)">🗂️</span>
+      <div>
+        <div class="guide-title" style="color:#fde047">
+          Users Unable to Print
+          <button class="copy-btn" data-copy="Go to Control Panel > Devices and Printers, right-click the printer > See what’s printing.\nCancel all pending print jobs.\nRestart the Print Spooler Service:\nOpen Run (Win + R), type services.msc, find Print Spooler, right-click > Restart.\nRetry printing.">
+            Copy
+          </button>
+        </div>
+        <ul class="list-disc pl-6">
+          <li>Go to Control Panel &gt; Devices and Printers, right-click the printer &gt; See what’s printing.</li>
+          <li>Cancel all pending print jobs.</li>
+          <li>Restart the Print Spooler Service:<br>
+            Open Run (Win + R), type <code>services.msc</code>, find Print Spooler, right-click &gt; Restart.
+          </li>
+          <li>Retry printing.</li>
+        </ul>
+      </div>
     </div>
 
     <div class="guide-section">
-      <div class="guide-title">📧 Email Issues</div>
-      <p>- Check your internet connection.</p>
-      <p>- Ensure your email credentials are correct.</p>
-      <p>- Try logging in using webmail.</p>
-      <p>- Clear your browser cache if using webmail.</p>
+      <span class="guide-icon" style="color:#6366f1; background:rgba(129,140,248,0.08)">📧</span>
+      <div>
+        <div class="guide-title" style="color:#c7d2fe">
+          Email Issues
+          <button class="copy-btn" data-copy="Check your internet connection.\nEnsure your email credentials are correct.\nTry logging in using webmail.\nClear your browser cache if using webmail.">
+            Copy
+          </button>
+        </div>
+        <ul class="list-disc pl-6">
+          <li>Check your internet connection.</li>
+          <li>Ensure your email credentials are correct.</li>
+          <li>Try logging in using webmail.</li>
+          <li>Clear your browser cache if using webmail.</li>
+        </ul>
+      </div>
     </div>
   </main>
 
-  <!-- 🔵 Footer (Kekal Sama) -->
   <footer>
     © 2025 Haziq IT Department Foresight
   </footer>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const text = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(text);
+        this.textContent = "Copied!";
+        setTimeout(() => this.textContent = "Copy", 1300);
+      });
+    });
+  </script>
 </body>
 </html>
