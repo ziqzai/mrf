@@ -115,7 +115,7 @@
       const ticket = makeTicketId();
       const ticketField = document.getElementById('ticketId');
       if (ticketField) ticketField.value = ticket;
-
+ 
       const fd = new FormData(form);
       const name = ((fd.get('firstName')||'') + ' ' + (fd.get('lastName')||'')).trim();
       sessionStorage.setItem('lastTicket', ticket);
