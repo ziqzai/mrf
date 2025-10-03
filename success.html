@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request Submitted — Foresight IT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg,#08ac9c,#764ba2); color:#fff; }
+    .card { max-width: 720px; margin: 6vh auto; background:#fff; color:#1f2937; border-radius:16px; padding:28px; box-shadow:0 12px 40px rgba(0,0,0,.25); }
+    .badge { display:inline-flex; align-items:center; font-weight:700; background:#ecfdf5; color:#065f46; padding:4px 12px; border-radius:9999px; border:1px solid #10b98122; }
+    .btn { display:inline-flex; align-items:center; gap:8px; font-weight:600; border-radius:12px; padding:12px 16px; border:none; cursor:pointer; }
+    .btn-primary { background:#111827; color:#fff; }
+    .btn-outline { background:#fff; color:#111827; border:1px solid #e5e7eb; }
+    .muted { color:#6b7280; }
+    .copy { border:1px dashed #d1d5db; background:#f9fafb; color:#111827; border-radius:10px; padding:12px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .footer { text-align:center; opacity:.85; font-size:.9rem; padding:12px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+      <h1 class="text-2xl font-bold">Request submitted</h1>
+      <span class="badge">IT Ticket</span>
+    </div>
+
+    <p class="mt-2 muted">Terima kasih! We’ve received your request. Keep this ticket ID for your reference.</p>
+
+    <div class="copy mt-4">
+      <div>
+        <div class="text-xs uppercase tracking-wide muted">Ticket ID</div>
+        <div id="ticketText" class="text-lg font-mono font-semibold">—</div>
+      </div>
+      <button id="copyBtn" class="btn btn-outline">Copy</button>
+    </div>
+
+    <div id="who" class="mt-4 muted"></div>
+
+    <div class="mt-6" style="display:flex; flex-wrap:wrap; gap:10px;">
+      <a href="it-support.html" class="btn btn-primary">Submit another request</a>
+      <a href="basic-troubleshoot.html" class="btn btn-outline">Troubleshoot guide</a>
+      <a href="index.html" class="btn btn-outline">Back to portal</a>
+    </div>
+
+    <hr class="mt-6 mb-4" />
+
+    <ul class="list-disc pl-5 muted">
+      <li><strong>What happens next:</strong> IT will triage your ticket and respond via phone or email.</li>
+      <li><strong>Hours:</strong> Mon–Fri, 9:00–18:00 (excluding public holidays).</li>
+      <li><strong>Emergency:</strong> Please call the IT hotline for critical outages.</li>
+    </ul>
+
+    <div class="footer mt-4">© Foresight IT Department</div>
+  </div>
+
+  <script>
+    (function(){
+      const qs = new URLSearchParams(location.search);
+      const ticket = qs.get('ticket') || sessionStorage.getItem('lastTicket') || 'UNKNOWN';
+      const el = document.getElementById('ticketText');
+      el.textContent = ticket;
+
+      const name = sessionStorage.getItem('lastRequester');
+      const email = sessionStorage.getItem('lastEmail');
+      const who = document.getElementById('who');
+      if (name || email) {
+        who.innerHTML = `<span>Submitted by <strong>${name || '—'}</strong>${email ? ' · <span class="font-mono">'+email+'</span>' : ''}</span>`;
+      }
+
+      document.getElementById('copyBtn').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(ticket);
+          const btn = document.getElementById('copyBtn');
+          const old = btn.textContent; btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent = old, 1200);
+        } catch(e){}
+      });
+    })();
+  </script>
+</body>
+</html>
