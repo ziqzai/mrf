@@ -15,7 +15,6 @@
     .btn-outline { background:#fff; color:#111827; border:1px solid #e5e7eb; }
     .muted { color:#6b7280; }
     .copy { border:1px dashed #d1d5db; background:#f9fafb; color:#111827; border-radius:10px; padding:12px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
-    .footer { text-align:center; opacity:.85; font-size:.9rem; padding:12px; }
   </style>
 </head>
 <body>
@@ -42,38 +41,19 @@
       <a href="basic-troubleshoot.html" class="btn btn-outline">Troubleshoot guide</a>
       <a href="index.html" class="btn btn-outline">Back to portal</a>
     </div>
-
-    <hr class="mt-6 mb-4" />
-
-    <ul class="list-disc pl-5 muted">
-      <li><strong>What happens next:</strong> IT will triage your ticket and respond via phone or email.</li>
-      <li><strong>Hours:</strong> Mon–Fri, 9:00–18:00 (excluding public holidays).</li>
-      <li><strong>Emergency:</strong> Please call the IT hotline for critical outages.</li>
-    </ul>
-
-    <div class="footer mt-4">© Foresight IT Department</div>
   </div>
 
   <script>
     (function(){
       const qs = new URLSearchParams(location.search);
       const ticket = qs.get('ticket') || sessionStorage.getItem('lastTicket') || 'UNKNOWN';
-      const el = document.getElementById('ticketText');
-      el.textContent = ticket;
-
+      document.getElementById('ticketText').textContent = ticket;
       const name = sessionStorage.getItem('lastRequester');
       const email = sessionStorage.getItem('lastEmail');
       const who = document.getElementById('who');
-      if (name || email) {
-        who.innerHTML = `<span>Submitted by <strong>${name || '—'}</strong>${email ? ' · <span class="font-mono">'+email+'</span>' : ''}</span>`;
-      }
-
+      if (name || email) who.innerHTML = `Submitted by <strong>${name||'—'}</strong>${email?' · <span class="font-mono">'+email+'</span>':''}`;
       document.getElementById('copyBtn').addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(ticket);
-          const btn = document.getElementById('copyBtn');
-          const old = btn.textContent; btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent = old, 1200);
-        } catch(e){}
+        try{ await navigator.clipboard.writeText(ticket); const b=this; }catch(e){}
       });
     })();
   </script>
