@@ -9,12 +9,12 @@
     html, body { height: 100%; margin: 0; }
     body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #08ac9c, #764ba2); color: #fff; display: flex; flex-direction: column; min-height: 100vh; }
     .content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem; }
-    .form-container { background-color: #fff; color: #333; padding: 1.5rem; border-radius: 12px; max-width: 600px; width: 95%; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); }
+    .form-container { background-color: #fff; color: #333; padding: 1.5rem; border-radius: 12px; max-width: 600px; width: 95%; box-shadow: 0 5px 15px rgba(0,0,0,.2); }
     .form-title { text-align: center; color: #08ac9c; font-weight: bold; margin-bottom: 20px; font-size: 1.5rem; }
-    .submit-button { background: linear-gradient(90deg, #08ac9c, #764ba2); color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; cursor: pointer; font-size: 1rem; font-weight: bold; }
-    .submit-button:hover { opacity: 0.95; }
-    .loading-text { text-align: center; color: #4a5568; font-size: 0.9rem; margin-top: 10px; display: none; }
-    footer { background: linear-gradient(90deg, #08ac9c, #764ba2); color: #fff; text-align: center; padding: 10px; font-size: 0.9rem; }
+    .submit-button { background: linear-gradient(90deg, #08ac9c, #764ba2); color:#fff; padding: 12px; border: none; border-radius: 8px; width: 100%; cursor: pointer; font-size: 1rem; font-weight: bold; }
+    .submit-button:hover { opacity: .95; }
+    .loading-text { text-align:center; color:#4a5568; font-size:.9rem; margin-top:10px; display:none; }
+    footer { background: linear-gradient(90deg, #08ac9c, #764ba2); color:#fff; text-align:center; padding:10px; font-size:.9rem; }
   </style>
 </head>
 <body>
@@ -28,6 +28,7 @@
   <div class="content">
     <div class="form-container">
       <h2 class="form-title">IT Support Request Form</h2>
+
       <form id="maintenanceForm" name="it-support" method="POST" action="success.html">
         <input type="hidden" name="ticketId" id="ticketId" />
         <div>
@@ -89,7 +90,9 @@
   <footer>© 2025 Haziq IT Department Foresight</footer>
 
   <script>
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwR616vSKxndjBNI7gYpoQeQZepCfFYUxw-eHyLQ9l6nsaahLT7pG0C25BeT6SIk34U/exec";
+  // === UBAH SINI: masukkan Web App /exec URL anda ===
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/PASTE_YOUR_EXEC_ID/exec";
+
   (function() {
     const form        = document.getElementById('maintenanceForm');
     const submitBtn   = document.getElementById('submitBtn');
@@ -109,13 +112,12 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (loadingText) loadingText.style.display = 'block';
-      if (submitBtn)   submitBtn.disabled = true;
+      loadingText.style.display = 'block';
+      submitBtn.disabled = true;
 
       const ticket = makeTicketId();
-      const ticketField = document.getElementById('ticketId');
-      if (ticketField) ticketField.value = ticket;
- 
+      document.getElementById('ticketId').value = ticket;
+
       const fd = new FormData(form);
       const name = ((fd.get('firstName')||'') + ' ' + (fd.get('lastName')||'')).trim();
       sessionStorage.setItem('lastTicket', ticket);
@@ -134,7 +136,7 @@
           sent = navigator.sendBeacon(APPS_SCRIPT_URL, new Blob([body], { type: 'application/x-www-form-urlencoded;charset=UTF-8' }));
         }
         if (!sent) {
-          fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body }).catch(()=>{});
+          fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{ 'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8' }, body }).catch(()=>{});
         }
       } catch (_) {}
 
